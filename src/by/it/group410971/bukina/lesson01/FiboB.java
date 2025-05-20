@@ -40,7 +40,7 @@ public class FiboB {
             fib[i] = fib[i - 1].add(fib[i - 2]); // F(n) = F(n-1) + F(n-2)
         }
 
-        return BigInteger.valueOf(-1L);
+        return fib[n];
     }
 
 }
