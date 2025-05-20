@@ -24,7 +24,49 @@ public class FiboC {
     long fasterC(long n, int m) {
         //Интуитивно найти решение не всегда просто и
         //возможно потребуется дополнительный поиск информации
-        return -1L;
+        // Находим длину периода Пизано для m
+        int pisanoPeriod = getPisanoPeriod(m);
+
+        // Находим эквивалентное n в пределах периода
+        n = n % pisanoPeriod;
+
+        if (n == 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        }
+
+        // Вычисляем F(n) mod m с помощью итерации
+        long prev = 0;
+        long curr = 1;
+        for (long i = 2; i <= n; i++) {
+            long next = (prev + curr) % m;
+            prev = curr;
+            curr = next;
+        }
+
+        return curr;
+    }
+
+    // Метод для вычисления длины периода Пизано для m
+    private int getPisanoPeriod(int m) {
+        long prev = 0;
+        long curr = 1;
+        int period = 0;
+
+        for (int i = 0; i < m * 6; i++) { // Достаточно проверить m*6 элементов
+            long next = (prev + curr) % m;
+            prev = curr;
+            curr = next;
+
+            // Период Пизано начинается с 0, 1, ...
+            if (prev == 0 && curr == 1) {
+                period = i + 1;
+                break;
+            }
+        }
+
+        return period;
     }
 
 
