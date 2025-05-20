@@ -1,6 +1,7 @@
 package by.it.group410971.bukina.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 Даны события events
@@ -23,8 +24,9 @@ public class A_VideoRegistrator {
     List<Double> calcStartTimes(double[] events, double workDuration) {
         //events - события которые нужно зарегистрировать
         //timeWorkDuration время работы видеокамеры после старта
-        List<Double> result;
-        result = new ArrayList<>();
+        List<Double> result = new ArrayList<>();
+        // Сортируем события по возрастанию времени
+        Arrays.sort(events);
         int i = 0;                              //i - это индекс события events[i]
         //Комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
         //Подготовка к жадному поглощению массива событий
@@ -37,7 +39,19 @@ public class A_VideoRegistrator {
         //вычислим момент окончания работы видеокамеры
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
+        while (i < events.length) {
+            // Запоминаем время старта текущего события
+            double startTime = events[i];
+            result.add(startTime);
 
+            // Вычисляем время окончания работы регистратора
+            double endTime = startTime + workDuration;
+
+            // Пропускаем все события, которые попадают в этот интервал
+            while (i < events.length && events[i] <= endTime) {
+                i++;
+            }
+        }
 
         return result;                        //вернем итог
     }
