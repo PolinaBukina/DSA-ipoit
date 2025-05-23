@@ -14,7 +14,7 @@ public class Lesson08Test {
         int res=instance.getMaxWeight(stream);
         assertEquals("A failed", res, 14);
     }
-
+//что такое
     @Test
     public void B() throws Exception {
         InputStream stream = B_Knapsack.class.getResourceAsStream("dataB.txt");
