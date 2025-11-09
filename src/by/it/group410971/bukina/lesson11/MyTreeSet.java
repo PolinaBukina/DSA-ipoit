@@ -1,9 +1,9 @@
-package by.it.a_khmelev.lesson11;
+package by.it.group410971.bukina.lesson11;
 
 import java.util.Collection;
-import java.util.Set;
-import java.util.Iterator;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Set;
 
 public class MyTreeSet<E> implements Set<E> {
 

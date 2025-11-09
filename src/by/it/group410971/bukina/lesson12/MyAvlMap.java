@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson12;
+package by.it.group410971.bukina.lesson12;
 
 import java.util.Map;
 

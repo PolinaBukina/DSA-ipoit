@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson12;
+package by.it.group410971.bukina.lesson12;
 
 import java.util.*;
 
@@ -131,7 +131,7 @@ public class MySplayMap implements NavigableMap<Integer, String> {
     @Override
     public Integer firstKey() {
         if (root == null) {
-            throw new java.util.NoSuchElementException();
+            throw new NoSuchElementException();
         }
         SplayNode minNode = findMin(root);
         root = splay(root, minNode.key);
@@ -141,7 +141,7 @@ public class MySplayMap implements NavigableMap<Integer, String> {
     @Override
     public Integer lastKey() {
         if (root == null) {
-            throw new java.util.NoSuchElementException();
+            throw new NoSuchElementException();
         }
         SplayNode maxNode = findMax(root);
         root = splay(root, maxNode.key);

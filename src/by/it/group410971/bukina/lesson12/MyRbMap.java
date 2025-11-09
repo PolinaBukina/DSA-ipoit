@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson12;
+package by.it.group410971.bukina.lesson12;
 
 import java.util.*;
 
@@ -124,7 +124,7 @@ public class MyRbMap implements SortedMap<Integer, String> {
     @Override
     public Integer firstKey() {
         if (root == null) {
-            throw new java.util.NoSuchElementException();
+            throw new NoSuchElementException();
         }
         return min(root).key;
     }
@@ -132,7 +132,7 @@ public class MyRbMap implements SortedMap<Integer, String> {
     @Override
     public Integer lastKey() {
         if (root == null) {
-            throw new java.util.NoSuchElementException();
+            throw new NoSuchElementException();
         }
         return max(root).key;
     }
