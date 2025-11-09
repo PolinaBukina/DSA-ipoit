@@ -7,31 +7,57 @@ import java.util.ListIterator;
 
 public class ListA<E> implements List<E> {
 
-    //Создайте аналог списка БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
+    private E[] elements = (E[]) new Object[10];
+    private int size = 0;
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
     //////               Обязательные к реализации методы             ///////
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
+
     @Override
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            sb.append(elements[i]);
+            if (i < size - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     @Override
     public boolean add(E e) {
-        return false;
+        if (size == elements.length) {
+            // Увеличиваем массив при необходимости
+            E[] newElements = (E[]) new Object[elements.length * 2];
+            System.arraycopy(elements, 0, newElements, 0, size);
+            elements = newElements;
+        }
+        elements[size++] = e;
+        return true;
     }
 
     @Override
     public E remove(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        E removedElement = elements[index];
+        // Сдвигаем элементы влево
+        for (int i = index; i < size - 1; i++) {
+            elements[i] = elements[i + 1];
+        }
+        elements[--size] = null; // Помогаем сборщику мусора
+        return removedElement;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -42,50 +68,94 @@ public class ListA<E> implements List<E> {
 
     @Override
     public void add(int index, E element) {
-
+        if (index < 0 || index > size) {
+            return;
+        }
+        if (size == elements.length) {
+            // Увеличиваем массив при необходимости
+            E[] newElements = (E[]) new Object[elements.length * 2];
+            System.arraycopy(elements, 0, newElements, 0, size);
+            elements = newElements;
+        }
+        // Сдвигаем элементы вправо
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+        elements[index] = element;
+        size++;
     }
 
     @Override
     public boolean remove(Object o) {
+        for (int i = 0; i < size; i++) {
+            if ((o == null && elements[i] == null) ||
+                    (o != null && o.equals(elements[i]))) {
+                remove(i);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     public E set(int index, E element) {
-        return null;
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        E oldElement = elements[index];
+        elements[index] = element;
+        return oldElement;
     }
-
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
-
 
     @Override
     public void clear() {
-
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        for (int i = 0; i < size; i++) {
+            if ((o == null && elements[i] == null) ||
+                    (o != null && o.equals(elements[i]))) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public E get(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        return elements[index];
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return indexOf(o) != -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        for (int i = size - 1; i >= 0; i--) {
+            if ((o == null && elements[i] == null) ||
+                    (o != null && o.equals(elements[i]))) {
+                return i;
+            }
+        }
+        return -1;
     }
+
+    // Остальные методы оставляем без реализации, как требуется в задании
 
     @Override
     public boolean containsAll(Collection<?> c) {
@@ -111,7 +181,6 @@ public class ListA<E> implements List<E> {
     public boolean retainAll(Collection<?> c) {
         return false;
     }
-
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
@@ -148,5 +217,4 @@ public class ListA<E> implements List<E> {
     public Iterator<E> iterator() {
         return null;
     }
-
 }
